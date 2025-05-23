@@ -1,7 +1,7 @@
 const mongodb = require('../data/database');
 const ObjectId = require('mongodb').ObjectId;
 
-// GET all books
+//#swagger.tags=['books']
 const getAll = async (req, res) => {
   try {
     const result = await mongodb.getDatabase().db().collection('books').find();
@@ -16,6 +16,7 @@ const getAll = async (req, res) => {
 
 // GET single book by ID
 const getSingle = async (req, res) => {
+  //#swagger.tags=['books']
   try {
     const userId = new ObjectId(req.params.id);
     const result = await mongodb.getDatabase().db().collection('books').find({ _id: userId });
@@ -28,7 +29,63 @@ const getSingle = async (req, res) => {
   }
 };
 
+const createUser = async (req, res) => {
+  //#swagger.tags=['books']
+  const user = {
+    title: req.body.title,
+    author: req.body.author,
+    genre: req.body.genre,
+    publishedDate: req.body.publishedDate,
+    price: req.body.price,
+    inStock: req.body.inStock,
+    rating: req.body.rating
+  };
+  const response = await mongodb.getDatabase().db().collection('books').insertOne(user);
+  if (response.acknowleged) {
+    res.status(204).send();
+  } else {
+    res.status(500).json(response.error || ' some error occurred while updating the user');
+  }
+};
+
+const updateUser = async (req, res) => {
+  //#swagger.tags=['books']
+  const userId = new ObjectId(req.params.id);
+  const user = {
+    title: req.body.title,
+    author: req.body.author,
+    genre: req.body.genre,
+    publishedDate: req.body.publishedDate,
+    price: req.body.price,
+    inStock: req.body.inStock,
+    rating: req.body.rating,
+    ipaddress: req.body.ipaddress
+};
+  const response = await mongodb.getDatabase().db().collection('books').replaceOne({_id: userId}, user);
+  if (response.modifiedCount > 0) {
+    res.status(204).send();
+  } else {
+    res.status(500).json(response.error || ' some error occurred while updating the user');
+  }
+
+};
+
+const deleteUser = async (req, res) => {
+  //#swagger.tags=['books']
+  const userId = new ObjectId(req.params.id);
+  const response = await mongodb.getDatabase().db().collection('books').deleteOne({ _id: userId },true);
+  if (response.deletedCount > 0) {
+    res.status(204).send();
+  } else {
+    res.status(500).json(response.error || ' some error occurred while deleting the user');
+  }
+
+};
+
 module.exports = {
   getAll,
-  getSingle
+  getSingle,
+  createUser,
+  updateUser,
+  deleteUser
 };
