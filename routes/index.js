@@ -1,13 +1,7 @@
 const router = require('express').Router();
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('../swagger.json');
 
-router.use('/', require('./swagger'));
-
-router.get('/', (req, res) => {
-  //#swagger.tags = ['Hello World']
-  res.send('Hello world');
-});
-
-router.use('/books', require('./books'));
-router.use('/authors', require('./authors'));
+router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 module.exports = router;

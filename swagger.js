@@ -1,11 +1,12 @@
-const swaggerAutogen =require('swagger-autogen')();
+const swaggerAutogen = require('swagger-autogen')();
+
 const doc = {
-    info:{
-        title: 'Books Api',
-        description: 'Books Api'
+    info: {
+        title: 'Books API',
+        description: 'Books API'
     },
     host: 'localhost:3001',
-    schemes: ['https', 'http']
+    schemes: ['http', 'https'] 
 };
 
 const outputFile = './swagger.json';
