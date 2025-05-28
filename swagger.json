@@ -8,8 +8,8 @@
   "host": "cse-341-project2-vvob.onrender.com",
   "basePath": "/",
   "schemes": [
-    "http",
-    "https"
+    "https",
+    "http"
   ],
   "paths": {
     "/": {
