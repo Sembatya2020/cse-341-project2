@@ -27,14 +27,12 @@ router.get('/auth/github/callback',
   }
 );
 
-// Logout Route - Corrected for GET and Browser Use
-router.get('/logout', function (req, res, next) {
-  req.logout(function (err) {
-    if (err) {
-      return next(err);
-    }
-    req.session.user = undefined; // Clear session user manually if used
-    res.send('Logged out successfully'); // Or use res.redirect('/') if you want
+// Logout
+router.get('/logout', function(req, res, next){
+  req.logout(function(err) {
+    if (err) { return next(err); }
+    req.session.user = undefined;
+    res.redirect('/');
   });
 });
 
