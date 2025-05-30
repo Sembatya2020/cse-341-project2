@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const authorsController = require('../controllers/authors');
+const {isAuthenticated} = require('../middleware/authenticate');
 
 router.get('/', authorsController.getAll);
 router.get('/:id', authorsController.getSingle);
