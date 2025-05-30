@@ -1,5 +1,15 @@
 const express = require('express');
 require('dotenv').config();
+
+// Add environment variable validation
+if (!process.env.GITHUB_CLIENT_ID || !process.env.GITHUB_CLIENT_SECRET) {
+  console.error('ERROR: Missing required GitHub OAuth environment variables:');
+  console.error('GITHUB_CLIENT_ID:', process.env.GITHUB_CLIENT_ID ? 'SET' : 'MISSING');
+  console.error('GITHUB_CLIENT_SECRET:', process.env.GITHUB_CLIENT_SECRET ? 'SET' : 'MISSING');
+  console.error('GITHUB_CALLBACK_URL:', process.env.GITHUB_CALLBACK_URL ? 'SET' : 'MISSING');
+  process.exit(1);
+}
+
 const bodyParser = require('body-parser');
 const mongodb = require('./data/database');
 const passport = require('passport');
