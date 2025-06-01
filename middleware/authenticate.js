@@ -1,5 +1,5 @@
 const isAuthenticated = (req, res, next) => {
-    // Check if user is authenticated via session (matching your current implementation)
+    
     if (req.session.user === undefined) {
         return res.status(401).json({
             error: 'Authentication required',
