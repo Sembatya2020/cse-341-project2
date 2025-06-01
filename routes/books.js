@@ -4,10 +4,13 @@ const booksController = require('../controllers/books');
 
 const {isAuthenticated} = require('../middleware/authenticate');
 
+// GET routes - typically public (no authentication required)
 router.get('/', booksController.getAll);
 router.get('/:id', booksController.getSingle);
-router.post('/', booksController.createBook);
-router.put('/:id', booksController.updateBook);
-router.delete('/:id', booksController.deleteBook);
+
+// POST, PUT, DELETE routes - protected with authentication
+router.post('/', isAuthenticated, booksController.createBook);
+router.put('/:id', isAuthenticated, booksController.updateBook);
+router.delete('/:id', isAuthenticated, booksController.deleteBook);
 
 module.exports = router;
